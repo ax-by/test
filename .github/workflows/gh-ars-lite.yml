@@ -1,0 +1,13 @@
+name: gh-ars-lite
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+jobs:
+  hello:
+    runs-on: lite
+    steps:
+      - run: |
+          echo "runner=$RUNNER_NAME host=$(hostname)"
+          test ! -e /home/runner/.jitconfig && echo "jitconfig removed"
+          sleep 20
