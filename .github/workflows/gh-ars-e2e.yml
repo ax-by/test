@@ -1,0 +1,21 @@
+name: gh-ars-e2e
+on:
+  workflow_dispatch:
+    inputs:
+      matrix:
+        description: 'job index list (JSON array)'
+        default: '[1,2,3]'
+      sleep:
+        description: 'seconds to sleep'
+        default: '60'
+jobs:
+  job:
+    runs-on: e2e
+    strategy:
+      matrix:
+        i: ${{ fromJSON(inputs.matrix) }}
+    steps:
+      - run: |
+          echo "i=${{ matrix.i }} runner=$RUNNER_NAME host=$(hostname)"
+          test ! -e /home/runner/.jitconfig && echo "jitconfig removed"
+          sleep ${{ inputs.sleep }}
